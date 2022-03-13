@@ -1,5 +1,7 @@
 import styles from './index.module.css';
 
+import { Button } from '@space-48/ui';
+
 export function Index() {
   /*
    * Replace the elements below with your own.
@@ -408,6 +410,8 @@ export function Index() {
           </p>
         </div>
       </div>
+
+      <Button />
     </div>
   );
 }
