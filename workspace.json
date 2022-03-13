@@ -3,6 +3,7 @@
   "projects": {
     "admin": "apps/admin",
     "admin-e2e": "apps/admin-e2e",
+    "api": "apps/api",
     "marketing": "apps/marketing",
     "marketing-e2e": "apps/marketing-e2e",
     "ui": "libs/ui"
