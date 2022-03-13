@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "admin": "apps/admin",
-    "admin-e2e": "apps/admin-e2e"
+    "admin-e2e": "apps/admin-e2e",
+    "marketing": "apps/marketing",
+    "marketing-e2e": "apps/marketing-e2e"
   }
 }
