@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ login }: Pick<UserModel, "login">) {
-    return login
+  async validate({ login, role }: Pick<UserModel, "login" | "role">) {
+    return { login, role }
   }
 }

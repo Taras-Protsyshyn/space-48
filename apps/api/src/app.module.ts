@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { StagePropertyModule } from './modules/stage-property/stage-property.module';
 import { configuration } from './config/configuration'
 import { validationSchema } from './config/validation'
 import { TypegooseModule } from 'nestjs-typegoose';
@@ -23,6 +24,7 @@ import { getMongoConfig } from './config/mongo.config';
       inject: [ConfigService],
       useFactory: getMongoConfig,
     }),
+    StagePropertyModule,
     UserModule,
     AuthModule,
   ],

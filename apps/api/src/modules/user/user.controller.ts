@@ -1,15 +1,40 @@
+import { BadRequestException, Body, Controller, Get, Param, Patch, UseGuards, UsePipes, ValidationPipe, Post } from '@nestjs/common';
+import { UserRoles } from '@space-48/shared/constants';
+
+import { AuthService } from './../auth/auth.service';
+import { UserService } from './user.service';
 import { UserLogin } from './../../decorators/user-login.decorator';
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
-import { UserService } from './user.service';
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { UserDto, RegisterUserDto } from './dto/user.dto';
+import { USER_ALREADY_EXIST } from './user.constants'
+import { Roles } from '../../decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
-import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService
+  ) { }
 
-  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Post('register')
+  async register(@Body() dto: RegisterUserDto) {
+    const oldUser = await this.userService.findUser(dto.login);
+
+    if (oldUser) {
+      throw new BadRequestException(USER_ALREADY_EXIST);
+    }
+
+    const passwordHash = await this.authService.hashPassword(dto.password);
+
+
+    return this.userService.createUser({ ...dto, role: UserRoles.user, passwordHash });
+  }
+
+  @Roles(UserRoles.admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('')
   async getAllUsers(@UserLogin() login: string) {
 
@@ -23,7 +48,7 @@ export class UserController {
   }
 
   @Patch('/archive')
-  async register(@Body() dto: UserDto) {
+  async archive(@Body() dto: UserDto) {
     return dto
   }
 }

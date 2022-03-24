@@ -1,12 +1,34 @@
-import { IsString } from 'class-validator'
 
-export class UserDto {
+import { IsString, IsEnum, IsOptional } from 'class-validator'
+
+import { UserRoles } from '@space-48/shared/constants';
+
+export class UserBaseDto {
   @IsString()
-  email: string;
+  login: string;
 
   @IsString()
   firstName: string;
 
   @IsString()
   lastName: string;
+
+  @IsOptional()
+  role: UserRoles;
+
 }
+
+export class UserDto extends UserBaseDto {
+  @IsEnum(UserRoles)
+  role: UserRoles;
+
+  @IsString()
+  passwordHash: string;
+}
+
+export class RegisterUserDto extends UserBaseDto {
+  @IsString()
+  password: string
+}
+
+

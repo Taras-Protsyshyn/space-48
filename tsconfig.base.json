@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@space-48/shared/constants": ["libs/shared/constants/src/index.ts"],
       "@space-48/ui": ["libs/ui/src/index.ts"]
     }
   },

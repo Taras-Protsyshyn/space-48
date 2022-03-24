@@ -1,3 +1,4 @@
+import { UserRoles } from '@space-48/shared/constants';
 import { UserService } from './../user/user.service';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -5,7 +6,7 @@ import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { genSalt, hash, compare } from 'bcrypt'
 
-import { AuthRegisterDto, AuthLoginDto } from './dto/auth.dto';
+import { AuthLoginDto } from './dto/auth.dto';
 import { UserModel } from './../user/user.model';
 import { JwtService } from '@nestjs/jwt';
 
@@ -17,13 +18,10 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
-  async hashPassword(dto: AuthRegisterDto): Promise<AuthRegisterDto> {
+  async hashPassword(passwordHash: string): Promise<string> {
     const salt = await genSalt(10);
 
-    return {
-      ...dto,
-      passwordHash: await hash(dto.passwordHash, salt)
-    }
+    return await hash(passwordHash, salt)
   }
 
   async validateUser(dto: AuthLoginDto): Promise<DocumentType<UserModel>> {
@@ -42,8 +40,8 @@ export class AuthService {
     return user;
   }
 
-  async createJWT(login: string): Promise<string> {
-    const payload = { login };
+  async createJWT(login: string, role: UserRoles): Promise<string> {
+    const payload = { login, role };
 
     return await this.jwtService.signAsync(payload)
   }
