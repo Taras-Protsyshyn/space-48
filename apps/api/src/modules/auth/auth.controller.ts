@@ -2,7 +2,6 @@
 import { Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { UserService } from './../user/user.service';
 import { AuthLoginDto } from './dto/auth.dto'
 import { UserDto } from '../user/dto/user.dto'
 
@@ -10,7 +9,6 @@ import { UserDto } from '../user/dto/user.dto'
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService
   ) { }
 
   @UsePipes(new ValidationPipe())

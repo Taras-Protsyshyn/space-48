@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
-import { prop } from '@typegoose/typegoose';
-import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses';
 
+import { prop } from '@typegoose/typegoose';
 import { UserRoles } from '@space-48/shared/constants';
 
-export interface UserModel extends Base { }
-export class UserModel extends TimeStamps {
+export class UserModel {
   @prop()
   login: string;
 

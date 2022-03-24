@@ -3,7 +3,6 @@ import { UserRoles } from '@space-48/shared/constants';
 
 import { AuthService } from './../auth/auth.service';
 import { UserService } from './user.service';
-import { UserLogin } from './../../decorators/user-login.decorator';
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import { UserDto, RegisterUserDto } from './dto/user.dto';
 import { USER_ALREADY_EXIST } from './user.constants'
@@ -36,8 +35,7 @@ export class UserController {
   @Roles(UserRoles.admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('')
-  async getAllUsers(@UserLogin() login: string) {
-
+  async getAllUsers() {
     return await this.userService.getAllUsers();
   }
 
