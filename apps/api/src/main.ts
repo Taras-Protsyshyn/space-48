@@ -1,17 +1,17 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config'
+import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const globalPrefix = 'api';
 
   app.setGlobalPrefix(globalPrefix);
   const config = app.get(ConfigService);
 
-  const port = config.get("port") || 3333;
+  const port = config.get('port') || 3333;
   await app.listen(port);
 
   Logger.log(

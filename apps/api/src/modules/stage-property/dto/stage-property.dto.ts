@@ -1,37 +1,35 @@
-import { IsNumber, IsOptional, IsString, IsArray, IsMongoId } from 'class-validator'
+import { IsNumber, IsOptional, IsString, IsMongoId } from 'class-validator';
 
 export class StagePropertyDto {
   @IsString()
-  name: string
+  name: string;
 
   @IsString()
-  description: string
+  description: string;
 
   @IsOptional()
   @IsNumber()
-  price: number
+  price: number;
 
-  @IsArray()
-  images: string[]
+  images: Array<Express.Multer.File | string>;
 }
 
 export class EditStagePropertyDto {
   @IsMongoId()
-  id: string
+  id: string;
 
   @IsOptional()
   @IsString()
-  name: string
+  name: string;
 
   @IsOptional()
   @IsString()
-  description: string
+  description: string;
 
   @IsOptional()
   @IsNumber()
-  price: number
+  price: number;
 
   @IsOptional()
-  @IsArray()
-  images: string[]
+  images: string[];
 }

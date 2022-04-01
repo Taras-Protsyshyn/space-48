@@ -1,39 +1,52 @@
-import { StagePropertyDto, EditStagePropertyDto } from './dto/stage-property.dto';
+import {
+  StagePropertyDto,
+  EditStagePropertyDto,
+} from './dto/stage-property.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
 
 import { StagePropertyModel } from './stage-property.model';
-
+import { S3Service } from '../../services/S3.service';
 
 @Injectable()
 export class StagePropertyService {
   constructor(
-    @InjectModel(StagePropertyModel) private stagePropertyModel: ModelType<StagePropertyModel>
-  ) { }
+    @InjectModel(StagePropertyModel)
+    private stagePropertyModel: ModelType<StagePropertyModel>,
+    private readonly s3Service: S3Service
+  ) {}
 
-  async createStageProperty(dto: StagePropertyDto): Promise<DocumentType<StagePropertyModel>> {
+  async createStageProperty(
+    dto: StagePropertyDto
+  ): Promise<DocumentType<StagePropertyModel>> {
     const newStageProperty = new this.stagePropertyModel(dto);
 
-    return newStageProperty.save()
+    return newStageProperty.save();
   }
 
   async getStageProperties(): Promise<DocumentType<StagePropertyModel>[]> {
-    return this.stagePropertyModel.find({}).exec()
+    return this.stagePropertyModel.find({}).exec();
   }
 
-  async getStagePropertyById(id: string): Promise<DocumentType<StagePropertyModel> | null> {
-
-    return this.stagePropertyModel.findById(id).exec()
+  async getStagePropertyById(
+    id: string
+  ): Promise<DocumentType<StagePropertyModel> | null> {
+    return this.stagePropertyModel.findById(id).exec();
   }
 
-  async findAndDeleteStagePropertyById(id: string): Promise<DocumentType<StagePropertyModel> | null> {
-
-    return this.stagePropertyModel.findByIdAndDelete(id).exec()
+  async findAndDeleteStagePropertyById(
+    id: string
+  ): Promise<DocumentType<StagePropertyModel> | null> {
+    return this.stagePropertyModel.findByIdAndDelete(id).exec();
   }
 
-  async editStagePropertyById(id: string, dto: EditStagePropertyDto): Promise<DocumentType<StagePropertyModel> | null> {
-
-    return this.stagePropertyModel.findByIdAndUpdate(id, dto, { new: true }).exec()
+  async editStagePropertyById(
+    id: string,
+    dto: EditStagePropertyDto
+  ): Promise<DocumentType<StagePropertyModel> | null> {
+    return this.stagePropertyModel
+      .findByIdAndUpdate(id, dto, { new: true })
+      .exec();
   }
 }
