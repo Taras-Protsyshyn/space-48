@@ -1,15 +1,15 @@
-import { prop } from "@typegoose/typegoose";
+import { prop } from '@typegoose/typegoose';
 
 export class StagePropertyModel {
   @prop()
-  name: string
+  name: string;
 
   @prop()
-  description: string
+  description: string;
 
   @prop()
-  price: number
+  price: number;
 
   @prop()
-  images: string[]
+  images: string[];
 }
