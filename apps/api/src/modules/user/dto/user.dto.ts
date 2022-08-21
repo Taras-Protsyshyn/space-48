@@ -1,16 +1,19 @@
 
-import { IsString, IsEnum, IsOptional } from 'class-validator'
+import { IsString, IsEnum, IsOptional, IsNotEmpty } from 'class-validator'
 
 import { UserRoles } from '@space-48/shared/constants';
 
 export class UserBaseDto {
   @IsString()
+  @IsNotEmpty()
   login: string;
 
   @IsString()
+  @IsNotEmpty()
   firstName: string;
 
   @IsString()
+  @IsNotEmpty()
   lastName: string;
 
   @IsOptional()
@@ -23,11 +26,13 @@ export class UserDto extends UserBaseDto {
   role: UserRoles;
 
   @IsString()
+  @IsNotEmpty()
   passwordHash: string;
 }
 
 export class RegisterUserDto extends UserBaseDto {
   @IsString()
+  @IsNotEmpty()
   password: string
 }
 
